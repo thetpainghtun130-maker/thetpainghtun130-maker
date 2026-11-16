@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiktok1 — Login Callback</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 640px; margin: 40px auto;
+         padding: 0 20px; line-height: 1.7; color: #222; }
+  h1 { font-size: 1.6em; }
+  code { display: block; background: #f4f4f4; border: 1px solid #ddd; border-radius: 8px;
+         padding: 14px; word-break: break-all; font-size: 1.1em; margin: 12px 0; }
+  button { background: #fe2c55; color: #fff; border: 0; border-radius: 8px;
+           padding: 12px 24px; font-size: 1em; cursor: pointer; }
+  .ok { color: #0a7d2c; font-weight: bold; }
+  .err { color: #c00; font-weight: bold; }
+</style>
+</head>
+<body>
+  <h1>🍎 Tiktok1 — Login ပြီးပါပြီ</h1>
+  <p id="msg">Code ကို ဖတ်နေပါတယ်…</p>
+  <code id="code" style="display:none"></code>
+  <button id="copyBtn" style="display:none" onclick="copyCode()">Copy လုပ်ရန်</button>
+  <p><small>ဒီ code ကို ကူးပြီး bot ရဲ့ <b>tiktok_auth.py token &lt;code&gt;</b> မှာ သုံးပါ။
+  Code ကို ဘယ်သူနဲ့မှ မမျှပါနဲ့။</small></p>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code');
+  const err = params.get('error');
+  const msg = document.getElementById('msg');
+  const codeEl = document.getElementById('code');
+  const btn = document.getElementById('copyBtn');
+  if (code) {
+    msg.innerHTML = '<span class="ok">✅ အောင်မြင်ပါတယ်!</span> အောက်က code ကို ကူးပါ။';
+    codeEl.textContent = code;
+    codeEl.style.display = 'block';
+    btn.style.display = 'inline-block';
+  } else if (err) {
+    msg.innerHTML = '<span class="err">❌ Login မအောင်မြင်ပါ:</span> ' + err;
+  } else {
+    msg.textContent = 'Code မတွေ့ပါ။ TikTok login စာမျက်နှာကနေ ပြန်လာမှ ဒီစာမျက်နှာမှာ code ပေါ်ပါမယ်။';
+  }
+  function copyCode() {
+    navigator.clipboard.writeText(code).then(() => {
+      btn.textContent = 'Copy ပြီးပြီ ✓';
+    });
+  }
+</script>
+</body>
+</html>
